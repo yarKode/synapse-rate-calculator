@@ -1,5 +1,7 @@
 import "./App.scss";
-import { Icon } from "@iconify/react";
+import { Provider } from "react-redux";
+
+import { store } from "./store";
 
 import Header from "./components/Header/Header";
 import HeroTitle from "./components/HeroTitle/HeroTitle";
@@ -11,21 +13,23 @@ import ContentColumn from "./components/ContentColumn/ContentColumn";
 function App() {
   return (
     <div className="App">
-      <Header />
+      <Provider store={store}>
+        <Header />
 
-      <div className="content-container">
-        <HeroTitle />
-        <div className="content-columns-container">
-          <ContentColumn>
-            <Form />
-          </ContentColumn>
+        <div className="content-container">
+          <HeroTitle />
+          <div className="content-columns-container">
+            <ContentColumn>
+              <Form />
+            </ContentColumn>
 
-          <ContentColumn>
-            <Display />
-            <ButtonSubmit />
-          </ContentColumn>
+            <ContentColumn>
+              <Display />
+              <ButtonSubmit />
+            </ContentColumn>
+          </div>
         </div>
-      </div>
+      </Provider>
     </div>
   );
 }
