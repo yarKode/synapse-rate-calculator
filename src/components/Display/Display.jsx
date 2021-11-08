@@ -35,7 +35,7 @@ export default function Display() {
 
   const basicRate = price / mainCurrencyData.rate;
 
-  const mainCurrencySum = time * price;
+  const mainCurrencySum = (time * price).toFixed(2);
 
   const subCurrenciesArr = generateSubCurrenciesArr(allCurrencies, basicRate);
 
