@@ -1,13 +1,14 @@
 import React from "react";
+import uniqid from "uniqid";
 
 import SubCurrency from "./SubCurrency";
 
-export default function SubCurrenciesDisplay() {
+export default function SubCurrenciesDisplay({ subCurrenciesArr }) {
   return (
     <div className="display-currencies-container">
-      <SubCurrency currency="EUR" value="234" />
-      <SubCurrency currency="RUB" value="8392" />
-      <SubCurrency currency="UAH" value="345" />
+      {subCurrenciesArr.map((el) => (
+        <SubCurrency name={el.name} value={el.value || 0} key={uniqid()} />
+      ))}
     </div>
   );
 }

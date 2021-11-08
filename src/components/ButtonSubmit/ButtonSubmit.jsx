@@ -5,7 +5,7 @@ export default function ButtonSubmit() {
 
   return (
     <div className="calculate-btn-container">
-      <button form="cal-form" className="calculate-btn" onClick={clickHandler}>
+      <button form="calc-form" className="calculate-btn" onClick={clickHandler}>
         RESULT
       </button>
     </div>

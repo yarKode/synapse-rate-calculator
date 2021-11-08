@@ -1,6 +1,6 @@
 const initState = {
   fields: {
-    rate: "",
+    price: "",
     time: "",
     currency: "",
   },
@@ -17,7 +17,7 @@ export default function mainReducer(state = initState, action) {
         ...state,
         fields: {
           ...state.fields,
-          rate: action.payload.rate,
+          price: action.payload.price,
           time: action.payload.time,
           currency: action.payload.currency,
         },
