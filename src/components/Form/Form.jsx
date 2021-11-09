@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -25,6 +25,7 @@ export default function Form() {
   });
 
   const allCurrencies = useSelector((state) => state.rates.allCurrencies);
+  const mainCurrency = useSelector((state) => state.main.currency);
   const timeStampCurrenciesUpdated = useSelector(
     (state) => state.rates.updatedAt
   );
@@ -32,10 +33,19 @@ export default function Form() {
 
   const dispatch = useDispatch();
 
+  const [chosenCurrency, setChosenCurrency] = useState(() => {
+    if (mainCurrency) return mainCurrency;
+    return "USD";
+  });
+
   function resetForm() {
     resetField("price");
     resetField("time");
     //  resetField("currency");
+  }
+
+  function handleListChange(e) {
+    setChosenCurrency((prev) => e.target.value);
   }
 
   function updateRatesIfCacheExpired() {
@@ -86,7 +96,11 @@ export default function Form() {
         </label>
         <label>
           Currency:
-          <select {...register("currency")}>
+          <select
+            {...register("currency")}
+            onChange={handleListChange}
+            value={chosenCurrency}
+          >
             {allCurrenciesNames &&
               allCurrenciesNames.map((name) => (
                 <option key={uniqid()} value={name}>

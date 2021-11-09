@@ -29,7 +29,7 @@ export const initStateMain = {
   fields: {
     price: "",
     time: "",
-    currency: "",
+    currency: "USD",
   },
   isLoading: false,
   ratesRequestErr: false,

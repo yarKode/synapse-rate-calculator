@@ -20,21 +20,21 @@ export default function Display() {
   };
 
   function generateSubCurrenciesArr(arr, basicRate) {
+    const subCurrencyInitial = arr.filter((el) => el.name !== currency);
     if (!currency) {
-      return [
-        { name: "--", value: 0 },
-        { name: "--", value: 0 },
-        { name: "--", value: 0 },
-      ];
-    }
-    return arr
-      .filter((el) => el.name !== currency)
-      .map((el) => {
+      return subCurrencyInitial.map((el) => {
         return {
-          name: el.name,
-          value: (el.rate * basicRate * time).toFixed(2),
+          ...el,
+          value: 0,
         };
       });
+    }
+    return subCurrencyInitial.map((el) => {
+      return {
+        name: el.name,
+        value: (el.rate * basicRate * time).toFixed(2),
+      };
+    });
   }
 
   const basicRate = price / mainCurrencyData.rate;
