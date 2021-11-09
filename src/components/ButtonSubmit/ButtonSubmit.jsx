@@ -1,7 +1,17 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  getNewRatesThunkCreator,
+  setNewRates,
+} from "../../store/currenciesReducer";
 
 export default function ButtonSubmit() {
-  const clickHandler = () => {};
+  const dispatch = useDispatch();
+
+  const clickHandler = () => {
+    dispatch(getNewRatesThunkCreator());
+  };
 
   return (
     <div className="calculate-btn-container">

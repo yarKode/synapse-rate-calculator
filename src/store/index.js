@@ -1,4 +1,5 @@
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import thunkMiddleware from "redux-thunk";
 
 import mainReducer from "./mainReducer";
 import currenciesReducer from "./currenciesReducer";
@@ -8,4 +9,4 @@ const rootReducer = combineReducers({
   rates: currenciesReducer,
 });
 
-export const store = createStore(rootReducer);
+export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
