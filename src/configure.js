@@ -20,6 +20,7 @@ export const initStateForRates = {
     { name: "UAH", rate: 1, symbol: "₴", isoCode: "980" },
     { name: "RUB", rate: 1, symbol: "₽", isoCode: "810" },
   ],
+  updatedAt: "",
 };
 
 export const initStateMain = {
@@ -28,5 +29,8 @@ export const initStateMain = {
     time: "",
     currency: "",
   },
-  submitToggler: false,
+  isLoading: false,
 };
+
+//limit fram for updating rates using API. If user made new request within specified timeframe (in seconds) data will requested from state, state not updated using API/
+export const ratesUpdatingTimeFrame = 60 * 3;

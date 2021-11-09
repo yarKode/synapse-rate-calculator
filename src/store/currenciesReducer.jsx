@@ -1,5 +1,6 @@
 import { initStateForRates } from "../configure";
 import { ratesDataAPI } from "../api/api";
+import { toggleLoadingStatus } from "./mainReducer";
 
 export const SET_NEW_RATES = "SET_NEW_RATES";
 
@@ -12,6 +13,7 @@ export default function currenciesReducer(state = initStateForRates, action) {
           ...el,
           rate: el.name === "USD" ? 1 : action.payload[el.name],
         })),
+        updatedAt: new Date(),
       };
     default:
       return {
@@ -26,8 +28,10 @@ export const setNewRates = (newRates) => {
 
 export const getNewRatesThunkCreator = () => {
   return (dispatch) => {
+    dispatch(toggleLoadingStatus());
     ratesDataAPI.getRates().then((newRatesObj) => {
       dispatch(setNewRates(newRatesObj));
+      dispatch(toggleLoadingStatus());
     });
   };
 };

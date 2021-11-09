@@ -12,7 +12,6 @@ import ButtonSubmit from "./components/ButtonSubmit/ButtonSubmit";
 import ContentColumn from "./components/ContentColumn/ContentColumn";
 
 function App() {
-  ratesDataAPI.getRates();
   return (
     <div className="App">
       <Provider store={store}>

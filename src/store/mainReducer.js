@@ -1,6 +1,8 @@
 import { initStateMain } from "../configure";
 
 export const SUBMIT_FIELDS_DATA = "SUBMIT_FIELDS_DATA";
+export const TOGGLE_IS_LOADING = "TOGGLE_IS_LOADING";
+export const CLEAR_FIELDS_STATE = "CLEAR_FIELDS_STATE";
 
 export default function mainReducer(state = initStateMain, action) {
   switch (action.type) {
@@ -12,6 +14,21 @@ export default function mainReducer(state = initStateMain, action) {
           price: action.payload.price,
           time: action.payload.time,
           currency: action.payload.currency,
+        },
+      };
+    case TOGGLE_IS_LOADING:
+      return {
+        ...state,
+        isLoading: !state.isLoading,
+      };
+    case CLEAR_FIELDS_STATE:
+      return {
+        ...state,
+        fields: {
+          ...state.fields,
+          price: "",
+          time: "",
+          currency: "",
         },
       };
     default:
@@ -26,4 +43,12 @@ export const submitFieldsData = (val) => {
     type: SUBMIT_FIELDS_DATA,
     payload: val,
   };
+};
+
+export const toggleLoadingStatus = () => {
+  return { type: TOGGLE_IS_LOADING, payload: null };
+};
+
+export const clearFormFields = () => {
+  return { type: CLEAR_FIELDS_STATE, payload: null };
 };

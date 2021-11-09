@@ -5,12 +5,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import uniqid from "uniqid";
 
 import { submitFieldsData } from "../../store/mainReducer";
+import { getNewRatesThunkCreator } from "../../store/currenciesReducer";
 import { formSchema, errorsMessages } from "../../configure";
 import {
   convertStrTimeToNum,
   handleTimeChange,
   handlePriceChange,
 } from "../../utils";
+import { ratesUpdatingTimeFrame } from "../../configure";
 
 export default function Form() {
   const {
@@ -23,6 +25,9 @@ export default function Form() {
   });
 
   const allCurrencies = useSelector((state) => state.rates.allCurrencies);
+  const timestampCurrenciesUpdate = useSelector(
+    (state) => state.rates.updatedAt
+  );
   const allCurrenciesNames = allCurrencies.map((el) => el.name);
 
   const dispatch = useDispatch();
@@ -35,6 +40,16 @@ export default function Form() {
 
   const onSubmit = ({ price, time: timeString, currency }) => {
     const time = convertStrTimeToNum(timeString);
+
+    const timeStampNow = new Date();
+    const timePassAfterRatesUpdated =
+      (timeStampNow - timestampCurrenciesUpdate) / 1000;
+
+    if (timePassAfterRatesUpdated >= ratesUpdatingTimeFrame) {
+      console.log("rates data will be refreshed");
+      dispatch(getNewRatesThunkCreator());
+    }
+
     dispatch(submitFieldsData({ price, time, currency }));
     resetForm();
   };
