@@ -4,6 +4,8 @@ export const SUBMIT_FIELDS_DATA = "SUBMIT_FIELDS_DATA";
 export const TOGGLE_IS_LOADING = "TOGGLE_IS_LOADING";
 export const CLEAR_FIELDS_STATE = "CLEAR_FIELDS_STATE";
 
+export const SET_REQUEST_ERR = "TOGGLE_REQUEST_ERR";
+
 export default function mainReducer(state = initStateMain, action) {
   switch (action.type) {
     case SUBMIT_FIELDS_DATA:
@@ -20,6 +22,11 @@ export default function mainReducer(state = initStateMain, action) {
       return {
         ...state,
         isLoading: !state.isLoading,
+      };
+    case SET_REQUEST_ERR:
+      return {
+        ...state,
+        ratesRequestErr: action.payload,
       };
     case CLEAR_FIELDS_STATE:
       return {
@@ -51,4 +58,8 @@ export const toggleLoadingStatus = () => {
 
 export const clearFormFields = () => {
   return { type: CLEAR_FIELDS_STATE, payload: null };
+};
+
+export const setRequestErr = (isRequestError) => {
+  return { type: SET_REQUEST_ERR, payload: isRequestError };
 };

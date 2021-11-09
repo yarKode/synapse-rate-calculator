@@ -14,6 +14,7 @@ export const ratesDataAPI = {
 
         return { EUR, RUB, UAH };
       }
+      throw new Error("Request failed. Rates were not updated 🥲");
     });
   },
 };

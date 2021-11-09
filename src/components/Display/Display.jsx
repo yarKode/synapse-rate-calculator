@@ -4,14 +4,14 @@ import { useSelector } from "react-redux";
 import SubCurrenciesDisplay from "./SubCurrenciesDisplay";
 import MainCurrencyDisplay from "./MainCurrencyDisplay";
 
-import Loader from "../Loader";
-
 export default function Display() {
   const { price, time, currency } = useSelector((state) => state.main.fields);
 
   const allCurrencies = useSelector((state) => state.rates.allCurrencies);
 
   const isLoading = useSelector((state) => state.main.isLoading);
+
+  const isRequestError = useSelector((state) => state.main.ratesRequestErr);
 
   const mainCurrencyData = allCurrencies.find((el) => el.name === currency) || {
     name: "",
@@ -45,6 +45,9 @@ export default function Display() {
 
   return (
     <div className="display">
+      {isRequestError && (
+        <p>Request Failed. Rates was not update properly 🤪</p>
+      )}
       <MainCurrencyDisplay
         currency={mainCurrencyData.symbol}
         sum={mainCurrencySum}

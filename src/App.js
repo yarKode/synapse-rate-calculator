@@ -2,7 +2,6 @@ import "./App.scss";
 import { Provider } from "react-redux";
 
 import { store } from "./store";
-import { ratesDataAPI } from "./api/api";
 
 import Header from "./components/Header/Header";
 import HeroTitle from "./components/HeroTitle/HeroTitle";

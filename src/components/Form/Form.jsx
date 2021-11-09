@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import uniqid from "uniqid";
 
-import { submitFieldsData } from "../../store/mainReducer";
+import { submitFieldsData, setRequestErr } from "../../store/mainReducer";
 import { getNewRatesThunkCreator } from "../../store/currenciesReducer";
 import { formSchema, errorsMessages } from "../../configure";
 import {
@@ -25,7 +25,7 @@ export default function Form() {
   });
 
   const allCurrencies = useSelector((state) => state.rates.allCurrencies);
-  const timestampCurrenciesUpdate = useSelector(
+  const timeStampCurrenciesUpdated = useSelector(
     (state) => state.rates.updatedAt
   );
   const allCurrenciesNames = allCurrencies.map((el) => el.name);
@@ -38,18 +38,23 @@ export default function Form() {
     //  resetField("currency");
   }
 
-  const onSubmit = ({ price, time: timeString, currency }) => {
-    const time = convertStrTimeToNum(timeString);
-
+  function updateRatesIfCacheExpired() {
     const timeStampNow = new Date();
     const timePassAfterRatesUpdated =
-      (timeStampNow - timestampCurrenciesUpdate) / 1000;
+      (timeStampNow - timeStampCurrenciesUpdated) / 1000;
 
     if (timePassAfterRatesUpdated >= ratesUpdatingTimeFrame) {
       console.log("rates data will be refreshed");
       dispatch(getNewRatesThunkCreator());
     }
+  }
 
+  const onSubmit = ({ price, time: timeString, currency }) => {
+    dispatch(setRequestErr(false));
+
+    const time = convertStrTimeToNum(timeString);
+
+    updateRatesIfCacheExpired();
     dispatch(submitFieldsData({ price, time, currency }));
     resetForm();
   };

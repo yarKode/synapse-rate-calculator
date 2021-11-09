@@ -1,6 +1,6 @@
 import { initStateForRates } from "../configure";
 import { ratesDataAPI } from "../api/api";
-import { toggleLoadingStatus } from "./mainReducer";
+import { toggleLoadingStatus, setRequestErr } from "./mainReducer";
 
 export const SET_NEW_RATES = "SET_NEW_RATES";
 
@@ -29,9 +29,17 @@ export const setNewRates = (newRates) => {
 export const getNewRatesThunkCreator = () => {
   return (dispatch) => {
     dispatch(toggleLoadingStatus());
-    ratesDataAPI.getRates().then((newRatesObj) => {
-      dispatch(setNewRates(newRatesObj));
-      dispatch(toggleLoadingStatus());
-    });
+    ratesDataAPI
+      .getRates()
+      .then((newRatesObj) => {
+        dispatch(setNewRates(newRatesObj));
+      })
+      .catch((err) => {
+        dispatch(setRequestErr(true));
+        throw new Error(`Rates were not updated 🥲. ${err}`);
+      })
+      .finally(() => {
+        dispatch(toggleLoadingStatus());
+      });
   };
 };
