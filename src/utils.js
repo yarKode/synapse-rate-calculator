@@ -5,7 +5,7 @@ export function convertStrTimeToNum(timeString) {
 
   if (!minutes) return Number(hours);
 
-  return Number((minutes / 60).toFixed(2)) + Number(hours);
+  return Number((minutes / 60).toFixed(5)) + Number(hours);
 }
 
 export function handleTimeChange(e) {

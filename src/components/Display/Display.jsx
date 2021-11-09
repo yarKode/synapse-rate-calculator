@@ -43,6 +43,8 @@ export default function Display() {
 
   const subCurrenciesArr = generateSubCurrenciesArr(allCurrencies, basicRate);
 
+  console.log("accurate price", { time, price });
+
   return (
     <div className="display">
       {isRequestError && (
