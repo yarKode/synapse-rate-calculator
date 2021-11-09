@@ -5,7 +5,9 @@ export function convertStrTimeToNum(timeString) {
 
   if (!minutes) return Number(hours);
 
-  return Number((minutes / 60).toFixed(5)) + Number(hours);
+  const minutesConvertedTrunced = parseFloat(String(minutes / 60).slice(0, 5));
+
+  return minutesConvertedTrunced + Number(hours);
 }
 
 export function handleTimeChange(e) {
