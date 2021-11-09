@@ -56,7 +56,7 @@ export default function Form() {
 
     updateRatesIfCacheExpired();
     dispatch(submitFieldsData({ price, time, currency }));
-    resetForm();
+    //resetForm();
   };
 
   return (
